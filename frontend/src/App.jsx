@@ -5,6 +5,7 @@ import Login from './features/auth/components/Login.jsx'
 import VerifyOTP from './features/auth/components/VerifyOtp.jsx'
 import ForgotPassword from './features/auth/components/ForgotPassword.jsx'
 import ResetPassword from './features/auth/components/ResetPassword.jsx'
+import Main from './components/MainPage.jsx'
 
 const App = () => {
   //Add user and loading state
@@ -62,10 +63,10 @@ const App = () => {
 
         {/* Protected Route */}
         <Route
-          path="/dashboard"
+          path="/main"
           element={
             isAuthenticated ? (
-              <Dashboard user={user} onLogout={() => setIsAuthenticated(false)} />
+              <Main user={user} onLogout={() => setIsAuthenticated(false)} />
             ) : (
               <Navigate to="/login" />
             )
@@ -75,7 +76,7 @@ const App = () => {
         {/* Redirect root path */}
         <Route
           path="/"
-          element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />}
+          element={<Navigate to={isAuthenticated ? "/main" : "/login"} />}
         />
         
         {/* Catch-all route */}
