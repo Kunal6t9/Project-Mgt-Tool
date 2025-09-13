@@ -7,6 +7,7 @@ import { connectDB } from "./database/db.js";
 import { errorMiddleware } from "./middleware/error.js";
 import userRouter from "./features/auth/userRoutes.js";
 import { removeUnverifiedAccounts } from "./automation/removeUnverifiedAccounts.js";
+import workspaceRoutes from "./features/workspace/workspace.routes.js";
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 // API routes
 // register your routes before error handler
 app.use("/api/user", userRouter);
+app.use("/api/workspace", workspaceRoutes);
 
 app.use(errorMiddleware);
 
