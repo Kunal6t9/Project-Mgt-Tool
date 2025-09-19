@@ -1,7 +1,6 @@
 import Workspace from "./workspace.model.js";
 
 //create a new workspace
-// route = POST /api/workspaces
 export const createWorkspace = async (req, res) => {
   try {
     const { name } = req.body;
@@ -24,12 +23,11 @@ export const createWorkspace = async (req, res) => {
 };
 
 //Get all workspaces for a user
-//route = GET /api/workspaces
 export const getUserWorkspaces = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    // Find workspaces where user is either owner or member
+    // Find workspaces
     const workspaces = await Workspace.find({
       $or: [{ owner: userId }, { members: userId }],
     })
