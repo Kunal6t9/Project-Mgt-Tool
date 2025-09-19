@@ -8,10 +8,10 @@ import { errorMiddleware } from "./middleware/error.js";
 import userRouter from "./features/auth/userRoutes.js";
 import { removeUnverifiedAccounts } from "./automation/removeUnverifiedAccounts.js";
 import workspaceRoutes from "./features/workspace/workspace.routes.js";
+import listRoutes from "./features/list/list.routes.js";
+import boardRoutes from "./features/board/board.routes.js";
 
 dotenv.config();
-
-// Connect to the database
 connectDB();
 
 export const app = express();
@@ -30,19 +30,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API routes
-// register your routes before error handler
 app.use("/api/user", userRouter);
 app.use("/api/workspace", workspaceRoutes);
+app.use("/api/boards",boardRoutes);
+app.use("/api/lists",listRoutes);
 
 app.use(errorMiddleware);
 
-// Scheduled tasks 
-// Schedule the cleanup task to run daily at midnight
+
 cron.schedule('0 0 * * *', () => {
   console.log('Running scheduled job: Removing unverified accounts...');
   removeUnverifiedAccounts();
 }, {
-  // Set to your server's timezone
   timezone: "Asia/Kolkata" 
 });
 

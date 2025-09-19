@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import Register from './features/auth/components/Register.jsx'
-import Login from './features/auth/components/Login.jsx'
-import VerifyOTP from './features/auth/components/VerifyOtp.jsx'
-import ForgotPassword from './features/auth/components/ForgotPassword.jsx'
-import ResetPassword from './features/auth/components/ResetPassword.jsx'
-import Main from './components/MainPage.jsx'
+import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Register from "./features/auth/components/Register.jsx";
+import Login from "./features/auth/components/Login.jsx";
+import VerifyOTP from "./features/auth/components/VerifyOtp.jsx";
+import ForgotPassword from "./features/auth/components/ForgotPassword.jsx";
+import ResetPassword from "./features/auth/components/ResetPassword.jsx";
+import Main from "./components/MainPage.jsx";
 
 const App = () => {
   //Add user and loading state
@@ -18,8 +18,8 @@ const App = () => {
     const checkAuthStatus = async () => {
       try {
         // fetch request automatically sends the httpOnly cookie
-        const response = await fetch('http://localhost:3000/api/user/me', {
-          credentials: 'include', // sends the cookie
+        const response = await fetch("http://localhost:3000/api/user/me", {
+          credentials: "include", // sends the cookie
         });
 
         if (response.ok) {
@@ -53,12 +53,13 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public Routes */}
-        <Route path="/login" element={<Login onLoginSuccess={() => setIsAuthenticated(true)} />} />
+        <Route
+          path="/login"
+          element={<Login onLoginSuccess={() => setIsAuthenticated(true)} />}
+        />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-otp" element={<VerifyOTP />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        {/* Note the URL param for the reset token */}
         <Route path="/password/reset/:token" element={<ResetPassword />} />
 
         {/* Protected Route */}
@@ -73,13 +74,8 @@ const App = () => {
           }
         />
 
-        {/* Redirect root path */}
-        <Route
-          path="/"
-          element={<Navigate to={isAuthenticated ? "/main" : "/login"} />}
-        />
-        
-        {/* Catch-all route */}
+        <Route path="/" element={<Navigate to="/login" />} />
+
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
